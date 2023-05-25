@@ -13,7 +13,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <ul>
                   <li class="bg-red-500 mb-4 text-center h-16 rounded-lg text-xl font-sans text-white"><a style="line-height: 4rem" href="{{ route('questions.index') }}">Quan ly cau hoi</a></li>
-                  <li class="bg-red-500 mb-4 text-center h-16 rounded-lg text-xl font-sans text-white"><a style="line-height: 4rem" href="">Quan ly nguoi dung</a></li>
+                  <li class="bg-red-500 mb-4 text-center h-16 rounded-lg text-xl font-sans text-white"><a style="line-height: 4rem" href="{{ route('user.index') }}">Quan ly nguoi dung</a></li>
                   <li class="bg-red-500 mb-4 text-center h-16 rounded-lg text-xl font-sans text-white"><a style="line-height: 4rem" href="">Quan ly bai kiem tra</a></li>
                 </ul>
             </div>

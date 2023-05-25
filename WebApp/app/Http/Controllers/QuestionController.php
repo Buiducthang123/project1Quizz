@@ -19,7 +19,7 @@ class QuestionController extends Controller
           return view('admin.question.show',[
             'questions'=>$questions,
             'test'=>$test,
-            'select_option'=>1
+            'select_option'=>0
         ]);
     }
     public function search(Request $request)
@@ -29,11 +29,16 @@ class QuestionController extends Controller
         $a = $request->input('search');
         $test= Test::all();
         $b = $request->input('typeOfTest');
-        // echo $a;
-        // echo $b;
-        
+       
+        if($b==0){
+            $questions = Question::where('QuestionContent','like','%'.$a.'%')->get();
+        }
+        else{
+
+            $questions = Question::where('test_id',$b)->where('QuestionContent','like','%'.$a.'%')->get();
+        }
    
-        $questions = Question::where('test_id',$b)->where('QuestionContent','like','%'.$a.'%')->get();
+
           return view('admin.question.show',[
             'questions'=>$questions,
             'test'=>$test,
@@ -77,7 +82,7 @@ class QuestionController extends Controller
                 'Status'=>1,
         ]);
         
-        return redirect('question/result')->with([
+        return redirect('question/result_exam')->with([
             'score' => $score,
             'true_question' => $true_question,
         ]);
@@ -102,7 +107,7 @@ class QuestionController extends Controller
       $question->create($request->all());
     //   or
     //   Question::create($request->all());
-      return redirect('admin/question');
+      return redirect('admin/questions');
     }
 
     /**

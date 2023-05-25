@@ -10,6 +10,7 @@ use App\Http\Controllers\ResultController;
 
 use App\Http\Controllers\ShowHistoryController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UpLoadFileQuestion;
 use App\Http\Controllers\UserController;
 use App\Models\Result;
 use App\Models\Test;
@@ -40,31 +41,30 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
+Route::prefix('/home')->middleware('role:admin,user')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-
-
-Route::prefix('/home')->middleware('role:admin')->group(function () {
-    Route::get('/', [HomeController::class,'index'])->name('home');
-   
 });
-Route::prefix('question')->middleware('role:admin')->group(function () {
-    Route::get('test/{id}',[QuestionController::class,'findTest'])->name('test_question');
-    Route::post('/checkCorrectoption',[QuestionController::class,'checkCorrectOption'])->name('checkCorrectoption');
-    Route::get('/history', [ResultController::class,'showHistory'])->name('history');
-    Route::view('/result', 'result');
-   
+Route::prefix('question')->middleware('role:admin,user')->group(function () {
+    Route::get('test/{id}', [QuestionController::class, 'findTest'])->name('test_question');
+    Route::post('/checkCorrectoption', [QuestionController::class, 'checkCorrectOption'])->name('checkCorrectoption');
+    Route::get('/history', [ResultController::class, 'showHistory'])->name('history');
+    Route::view('/result_exam', 'result');
+
 });
 
-Route::get('/aaa',[TestController::class,'index']);
+
 
 Route::prefix('admin')->middleware('role:admin')->group(function () {
-    Route::get('/', [AdminController::class,'index']);
+    Route::get('/', [AdminController::class, 'index']);
     Route::resource('/questions', QuestionController::class)->names('questions');
-    Route::get('/search_question',[QuestionController::class,'search'])->name('questions.search');
-    Route::prefix('user')->group(function () {
-        Route::get('/', [UserController::class,'index']);
-    });
+    Route::get('/search_question', [QuestionController::class, 'search'])->name('questions.search');
+    Route::resource('results', ResultController::class);
+    Route::resource('user', UserController::class);
+    Route::get('users/history/{id}', [ResultController::class, 'showHistoryUser'])->name('history.user');
+    Route::get('/question_upload', [UpLoadFileQuestion::class, 'index'])->name('create.upload');
+    Route::post('/question_upload_csv', [UpLoadFileQuestion::class, 'processUpLoad'])->name('handleUpLoad');
 });

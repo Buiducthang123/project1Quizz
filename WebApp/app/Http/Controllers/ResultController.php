@@ -61,12 +61,21 @@ class ResultController extends Controller
      */
     public function destroy(Result $result)
     {
-        //
+     
+        $a = 'admin/users/history/'.$result->user_id;
+        $result->delete();
+        return redirect($a);
     }
     public function showHistory()
     {
         $result = Result::where('user_id',auth()->user()->id)->get();
        
         return view('history',['result'=>$result]);
+    }
+    public function showHistoryUser($id)
+    {
+        $result = Result::where('user_id',$id)->get();
+       
+        return view('admin.user.history',['result'=>$result]);
     }
 }

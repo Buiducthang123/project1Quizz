@@ -13,8 +13,9 @@ class UserController extends Controller
     public function index()
     {
         //
-        $user = User::where('user_id',1);
-        echo $user;
+        $user = User::where('role_id',1)->get();
+    
+        return view('admin.user.index',['users'=>$user]);
     }
 
     /**
@@ -63,5 +64,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+        $user->delete();
+        return redirect('admin/user');
     }
 }

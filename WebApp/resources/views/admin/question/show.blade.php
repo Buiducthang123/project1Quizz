@@ -1,13 +1,13 @@
 @extends('admin.question.index')
 @section('questions')
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="relative" style="margin-left: 60%; margin-bottom: 20px;">
+        <div class="" style=" margin-bottom: 20px; width: 100%;">
             <form action="{{ route('questions.search') }}" method="GET">
                 @csrf
                 <select
                     style="background-color: #f2f2f2; color: #333; padding: 10px; border: none; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); cursor: pointer; width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
                     name="typeOfTest">
-
+                        <option value="0" style="background-color: #fff; color: #333; padding: 10px; padding-right:30px;">Tất cả</option>
                     @foreach ($test as $item)
                         <option
                             style="background-color: #fff; color: #333; padding: 10px; padding-right:30px;"
@@ -31,13 +31,13 @@
                     class="py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     name="search">
                 <button
-                    style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px; margin-left: 10px;"
-                    type="submit">submit</button>
+                    style="background-color: #4CAF50; color: white; padding: 5px 15px; border: none; cursor: pointer; border-radius: 5px; margin-left: 10px;"
+                    type="submit">Tìm kiếm</button>
+                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-1 rounded"
+                        style="background: rgb(9, 13, 249)">
+                        <a href="{{ route('questions.create') }}">Thêm</a>
+                    </button>
             </form>
-            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-1 rounded"
-                style="background: rgb(9, 13, 249)">
-                <a href="{{ route('questions.create') }}">Thêm</a>
-            </button>
         </div>
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div>
